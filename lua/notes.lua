@@ -10,7 +10,7 @@ function M.open_notes()
     local buf = vim.api.nvim_create_buf(true, true)
     vim.api.nvim_buf_set_name(buf, notes_file)
     vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
-    vim.api.nvim_buf_set_option(buf, "buftype", "nofile") -- "nofile" so it's not written to disk automatically
+    vim.api.nvim_buf_set_option(buf, "buftype", "")
 
     local width = 80
     local height = 20
