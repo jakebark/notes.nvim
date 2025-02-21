@@ -12,6 +12,7 @@ function M.open_notes()
     for _, b in ipairs(vim.api.nvim_list_bufs()) do
         if vim.api.nvim_buf_get_name(b) == notes_file then
             buf = b
+            vim.api.nvim_buf_set_lines(buf, 0, -1, false, {})
             local contents = vim.fn.readfile(notes_file)
             vim.api.nvim_buf_set_lines(buf, 0, -1, false, contents)
             break
