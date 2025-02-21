@@ -29,13 +29,16 @@ function M.open_notes()
         vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
     end
 
+
     local function save_and_close()
-        vim.api.nvim_command("w! " .. note_file)
-        vim.api.nvim_command("bd!")
+        local new_lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false) -- Get all lines from buffer
+        vim.fn.writefile(new_lines, note_file)                          -- Save to file
+        vim.api.nvim_buf_delete(buf, { force = true })                  -- Close buffer
     end
 
     -- close window on Esc
-    vim.api.nvim_buf_set_keymap(buf, "n", "<Esc>", "<cmd>bd!<CR>", { noremap = true, silent = true })
+    vim.api.nvim_buf_set_keymap(buf, "n", "<Esc>", "<cmd>lua require('notes').save_and_close()<CR>",
+        { noremap = true, silent = true })
 end
 
 return M
