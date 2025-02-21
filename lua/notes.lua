@@ -7,13 +7,20 @@ function M.open_notes()
         vim.fn.writefile({}, notes_file)
     end
 
+    -- look for existing buffer first
     local buf = nil
     for _, b in ipairs(vim.api.nvim_list_bufs()) do
         if vim.api.nvim_buf_get_name(b) == notes_file then
             buf = b
-            vim.api.nvim_buf_call(buf, function()
-                vim.cmd('edit')
-            end)
+            if vim.api.nvim_buf_get_option(buf, "modified") then
+                vim.api.nvim_buf_call(buf, function()
+                    vim.cmd('edit!')
+                end)
+            else
+                vim.api.nvim_buf_call(buf, function()
+                    vim.cmd('edit')
+                end)
+            end
             break
         end
     end
@@ -22,6 +29,7 @@ function M.open_notes()
         buf = vim.api.nvim_create_buf(true, true)
         vim.api.nvim_buf_set_name(buf, notes_file)
 
+        -- load buffer on 1st open
         local contents = vim.fn.readfile(notes_file)
         vim.api.nvim_buf_set_lines(buf, 0, -1, false, contents)
     end
