@@ -1,12 +1,10 @@
 local M = {}
 
 function M.open_notes()
-    -- Create a buffer
     local buf = vim.api.nvim_create_buf(false, true)
 
-    -- Define floating window dimensions
-    local width = 80
-    local height = 20
+    local width = 120
+    local height = 40
     local opts = {
         relative = "editor",
         width = width,
@@ -17,10 +15,10 @@ function M.open_notes()
         border = "rounded",
     }
 
-    -- Open the floating window
+    -- floating window
     local win = vim.api.nvim_open_win(buf, true, opts)
 
-    -- Set buffer options
+    -- set buffer options
     local note_file = vim.fn.expand("$HOME") .. "/.nvim_notes.md"
     vim.api.nvim_buf_set_name(buf, note_file)
     vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
@@ -31,7 +29,12 @@ function M.open_notes()
         vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
     end
 
-    -- Set keymap to close window on Esc
+    local function save_and_close()
+        vim.api.nvim_command("w! " .. note_file)
+        vim.api.nvim_command("bd!")
+    end
+
+    -- close window on Esc
     vim.api.nvim_buf_set_keymap(buf, "n", "<Esc>", "<cmd>bd!<CR>", { noremap = true, silent = true })
 end
 
