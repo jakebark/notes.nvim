@@ -21,6 +21,9 @@ function M.open_notes()
     if not buf then
         buf = vim.api.nvim_create_buf(true, true)
         vim.api.nvim_buf_set_name(buf, notes_file)
+
+        local contents = vim.fn.readfile(notes_file)
+        vim.api.nvim_buf_set_lines(buf, 0, -1, false, contents)
     end
 
     vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
