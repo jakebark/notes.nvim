@@ -11,6 +11,9 @@ function M.open_notes()
     for _, b in ipairs(vim.api.nvim_list_bufs()) do
         if vim.api.nvim_buf_get_name(b) == notes_file then
             buf = b
+            vim.api.nvim_buf_call(buf, function()
+                vim.cmd('edit')
+            end)
             break
         end
     end
