@@ -1,6 +1,6 @@
 # notes.nvim
 
-![image info](./img/readme.png)
+![image info](./img/readme.png | width=300)
 
 packer:
 ```
