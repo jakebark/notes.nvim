@@ -7,8 +7,19 @@ function M.open_notes()
         vim.fn.writefile({}, notes_file)
     end
 
-    local buf = vim.api.nvim_create_buf(true, true)
-    vim.api.nvim_buf_set_name(buf, notes_file)
+    local buf = nil
+    for _, b in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.api.nvim_buf_get_name(b) == notes_file then
+            buf = b
+            break
+        end
+    end
+
+    if not buf then
+        buf = vim.api.nvim_create_buf(true, true)
+        vim.api.nvim_buf_set_name(buf, notes_file)
+    end
+
     vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
     vim.api.nvim_buf_set_option(buf, "buftype", "")
 
