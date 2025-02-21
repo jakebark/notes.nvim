@@ -13,13 +13,11 @@ function M.open_notes()
         if vim.api.nvim_buf_get_name(b) == notes_file then
             buf = b
             if vim.api.nvim_buf_get_option(buf, "modified") then
-                vim.api.nvim_buf_call(buf, function()
-                    vim.cmd('edit!')
-                end)
+                -- Force reload the buffer (without saving changes)
+                vim.cmd('edit!') -- Force reload from disk and discard unsaved changes
             else
-                vim.api.nvim_buf_call(buf, function()
-                    vim.cmd('edit')
-                end)
+                -- Simply reload the buffer without force if no changes
+                vim.cmd('edit') -- Open the buffer again to reload it from disk
             end
             break
         end
