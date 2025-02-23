@@ -12,9 +12,17 @@ function M.open_notes()
     for _, b in ipairs(vim.api.nvim_list_bufs()) do -- cycle through existing buffers
         if vim.api.nvim_buf_get_name(b) == notes_file then
             buf = b
-            vim.api.nvim_buf_call(buf, function() -- executes func inside buffer
-                vim.cmd('edit')                   -- reloads file
-            end)
+            -- check swap file
+            if vim.fn.filereadable(notes_file .. ".swp") == 1 then
+                vim.notify("Swap file detected! Another instance may be editing this file.", vim.log.levels.WARN)
+            else
+                vim.api.nvim_buf_call(buf, function()
+                    if not vim.api.nvim_buf_get_option(buf, "modified") then
+                        vim.cmd('silent! checktime') -- check if file changed externally
+                        vim.cmd('edit')              -- reload only if not modified
+                    end
+                end)
+            end
             break
         end
     end
