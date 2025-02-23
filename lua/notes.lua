@@ -12,31 +12,17 @@ function M.open_notes()
     for _, b in ipairs(vim.api.nvim_list_bufs()) do -- cycle through existing buffers
         if vim.api.nvim_buf_get_name(b) == notes_file then
             buf = b
-            if vim.fn.filereadable(notes_file .. ".swp") == 1 then
-                vim.notify("Swap file detected! Another instance may be editing this file.", vim.log.levels.WARN)
-            else
-                vim.api.nvim_buf_call(buf, function()
-                    vim.cmd('silent! checktime')
-                    if not vim.api.nvim_buf_get_option(buf, "modified") then
-                        vim.cmd('silent! edit ' .. vim.fn.fnameescape(notes_file))
-                    end
-                end)
-            end
+            vim.api.nvim_buf_call(buf, function() -- executes func inside buffer
+                vim.cmd('edit')                   -- reloads file
+            end)
             break
         end
     end
 
     if not buf then
         buf = vim.api.nvim_create_buf(true, true)
-        vim.api.nvim_buf_set_name(buf, notes_file)
-
         vim.api.nvim_buf_call(buf, function()
-            if vim.fn.filereadable(notes_file .. ".swp") == 1 then
-                vim.notify("Swap file detected! Opening in read-only mode.", vim.log.levels.WARN)
-                vim.cmd('silent! view ' .. vim.fn.fnameescape(notes_file)) -- open read-only
-            else
-                vim.cmd('silent! edit ' .. vim.fn.fnameescape(notes_file)) -- open normally
-            end
+            vim.cmd('silent! edit ' .. vim.fn.fnameescape(notes_file)) -- silent! allows us to open safely and avoid E13 errors
         end)
     end
 
