@@ -9,11 +9,11 @@ function M.open_notes()
 
     -- look for existing buffer first
     local buf = nil
-    for _, b in ipairs(vim.api.nvim_list_bufs()) do -- cycle through existing buffers
+    for _, b in ipairs(vim.api.nvim_list_bufs()) do
         if vim.api.nvim_buf_get_name(b) == notes_file then
             buf = b
-            vim.api.nvim_buf_call(buf, function() -- executes func inside buffer
-                vim.cmd('edit')                   -- reloads file
+            vim.api.nvim_buf_call(buf, function()
+                vim.cmd('edit')
             end)
             break
         end
@@ -22,7 +22,7 @@ function M.open_notes()
     if not buf then
         buf = vim.api.nvim_create_buf(true, true)
         vim.api.nvim_buf_call(buf, function()
-            vim.cmd('silent! edit ' .. vim.fn.fnameescape(notes_file)) -- silent! allows us to open safely and avoid E13 errors
+            vim.cmd('silent! edit ' .. vim.fn.fnameescape(notes_file)) -- silent! avoids E13 errors
         end)
     end
 
