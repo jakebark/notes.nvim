@@ -1,7 +1,7 @@
 # notes.nvim
 
 
-<img src="./img/demo.gif" width="650">
+<img src="./img/readme.png" width="650">
 
 packer:
 ```
