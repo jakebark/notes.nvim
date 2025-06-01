@@ -1,7 +1,6 @@
 # notes.nvim
 
-
-<img src="./img/demo.gif" width="650">
+Persistent notes window in neovim. 
 
 ## Installation
 
