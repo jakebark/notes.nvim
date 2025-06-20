@@ -48,7 +48,7 @@ function M.open_notes()
         row = math.floor((vim.o.lines - height) / 2),
         col = math.floor((vim.o.columns - width) / 2),
         width = config.width,
-        height = config.width,
+        height = config.height,
         style = 'minimal',
         border = 'single',
     })
