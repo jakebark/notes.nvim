@@ -45,8 +45,8 @@ function M.open_notes()
 
     local win = vim.api.nvim_open_win(buf, true, {
         relative = 'editor',
-        row = math.floor((vim.o.lines - height) / 2),
-        col = math.floor((vim.o.columns - width) / 2),
+        row = math.floor((vim.o.lines - config.height) / 2),
+        col = math.floor((vim.o.columns - config.width) / 2),
         width = config.width,
         height = config.height,
         style = 'minimal',
