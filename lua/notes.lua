@@ -54,11 +54,11 @@ function M.open_notes()
     })
 
     if config.relative_numbers then
-        vim.bo[buf].relativenumber = true
-        vim.bo[buf].number = true
+        vim.wo[win].relativenumber = true
+        vim.wo[win].number = true
     else
-        vim.bo[buf].number = true
-        vim.bo[buf].relativenumber = false
+        vim.wo[win].number = true
+        vim.wo[win].relativenumber = false
     end
 
     -- focus on floating window
