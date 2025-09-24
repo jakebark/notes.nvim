@@ -40,8 +40,8 @@ function M.open_notes()
         end)
     end
 
-    vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
-    vim.api.nvim_buf_set_option(buf, "buftype", "")
+    vim.bo[buf].filetype = "markdown"
+    vim.bo[buf].buftype = ""
 
     local win = vim.api.nvim_open_win(buf, true, {
         relative = 'editor',
@@ -54,11 +54,11 @@ function M.open_notes()
     })
 
     if config.relative_numbers then
-        vim.api.nvim_buf_set_option(buf, 'relativenumber', true)
-        vim.api.nvim_buf_set_option(buf, 'number', true)
+        vim.bo[buf].relativenumber = true
+        vim.bo[buf].number = true
     else
-        vim.api.nvim_buf_set_option(buf, 'number', true)
-        vim.api.nvim_buf_set_option(buf, 'relativenumber', false)
+        vim.bo[buf].number = true
+        vim.bo[buf].relativenumber = false
     end
 
     -- focus on floating window
